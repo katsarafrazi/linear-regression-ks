@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, make_response
+from flask import Flask
 import pickle
 import numpy as np
 import json
@@ -12,6 +12,10 @@ app = Flask(__name__)
 parser = reqparse.RequestParser()
 parser.add_argument('data')
 
+# Load model
+with open(os.path.join(os.getcwd(),'model','model.pickle'), 'rb') as f:
+    model = pickle.load(f)
+        
 # Endpoint for streaming mode
 @app.route("/stream/", methods =["POST"])
 def stream():
@@ -50,9 +54,10 @@ def model_check():
         'r2 Coef':str(model.r2)
 }
 
+@app.route("/", methods =["GET"])
+def welcome():  
+    return "Welcome to Linear Regression API."
+
 if __name__ == '__main__':
-    # Load model
-    with open(os.path.join(os.getcwd(),'model','model.pickle'), 'rb') as f:
-        model = pickle.load(f)
 
     app.run(debug=True)

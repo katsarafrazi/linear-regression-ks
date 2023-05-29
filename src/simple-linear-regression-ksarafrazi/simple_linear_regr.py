@@ -1,10 +1,10 @@
 import numpy as np
 from simple_linear_regr_utils import generate_data, evaluate
-import pickle
+import pickle, json
 import time, os
 
 VERSION = 1.0
-DEF_LR = 0.05
+DEF_LR = 0.1
 DEF_ITERATIONS = 25000
 
 class SimpleLinearRegression:
@@ -128,5 +128,22 @@ if __name__ == "__main__":
     # Save model
     with open(os.path.join(os.getcwd(),'model','model.pickle'), 'wb') as f:
         pickle.dump(model, f)
+    
+    model_dict = {
+        'Model Type': 'SimpleLinearRegression', 
+        'Version':model.version, 
+        'Number of Inputs':len(model.W[0]), 
+        'Weights': str(model.W[0]), 
+        'Bias': str(model.b[0]), 
+        'Loss':str(model.losses[-1]),
+        'r2 Coef':str(model.r2)
+    }
+
+    # Serializing json
+    model_json = json.dumps(model_dict, indent=4)
+
+    # Writing to sample.json
+    with open(os.path.join(os.getcwd(),'model','model_json.json'), "w") as outfile:
+        outfile.write(model_json)
         
     print("Model Saved Successfully.")

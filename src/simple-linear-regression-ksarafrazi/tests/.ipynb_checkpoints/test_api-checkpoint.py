@@ -8,7 +8,8 @@ import json
 HEADERS={
     'Content-type':'application/json'
 }
-API_PATH = 'http://127.0.0.1:5000'
+# API_PATH = 'http://127.0.0.1:5000' #local adress
+API_PATH = 'https://ksarafrazi.pythonanywhere.com' # public adress
 
 def test_stream_mode():    
     X = [0.06169621]

@@ -1,0 +1,9 @@
+{
+    "Model Type": "SimpleLinearRegression",
+    "Version": 1.0,
+    "Number of Inputs": 1,
+    "Weights": "[940.75939441]",
+    "Bias": "126.80244313753387",
+    "Loss": "1956830.582101173",
+    "r2 Coef": "0.5193603197724603"
+}
