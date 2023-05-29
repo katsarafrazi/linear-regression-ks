@@ -20,7 +20,10 @@ def stream():
     X = np.array(json.loads(args['data']))
     prediction = model.predict(X)
     
-    return prediction.tolist(), 200
+    return {
+        'Input': X[0],
+        'Prediction': prediction[0]
+}
 
 # Endpoint for batch mode
 @app.route("/batch/", methods =["POST"])
@@ -30,7 +33,10 @@ def batch():
     X = np.array(json.loads(args['data']))
     prediction = model.predict(X)
     
-    return prediction.tolist(), 200
+    return {
+        'Input': X.tolist(),
+        'Prediction': prediction[:,0].tolist()
+}
 
 @app.route("/model-check", methods =["GET"])
 def model_check():  
@@ -40,7 +46,8 @@ def model_check():
         'Number of Inputs':len(model.W[0]), 
         'Weights': str(model.W[0]), 
         'Bias': str(model.b[0]), 
-        'Loss':str(model.losses[-1])
+        'Loss':str(model.losses[-1]),
+        'r2 Coef':str(model.r2)
 }
 
 if __name__ == '__main__':

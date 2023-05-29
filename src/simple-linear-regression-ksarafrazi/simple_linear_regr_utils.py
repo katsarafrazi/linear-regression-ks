@@ -1,7 +1,8 @@
 import numpy as np
-from sklearn.datasets import load_diabetes
 from sklearn.metrics import mean_squared_error, r2_score
 import matplotlib.pyplot as plt
+from data_loader import load_data
+from data_transformer import *
 
 def generate_data():
     """
@@ -14,19 +15,15 @@ def generate_data():
         diabetes_y_test: The output corresponding to the test set
 
     """
-    # Load the diabetes dataset
-    diabetes_X, diabetes_y = load_diabetes(return_X_y=True)
-
-    # Use only one feature
-    diabetes_X = diabetes_X[:, np.newaxis, 2]
+    
+    #Load data
+    diabetes_X, diabetes_y = load_data()
+   
+    # Data transformation
+    diabetes_X = feature_selection(diabetes_X)
 
     # Split the data into training/testing sets
-    diabetes_X_train = diabetes_X[:-20]
-    diabetes_X_test = diabetes_X[-20:]
-
-    # Split the targets into training/testing sets
-    diabetes_y_train = diabetes_y[:-20].reshape(-1,1)
-    diabetes_y_test = diabetes_y[-20:].reshape(-1,1)
+    diabetes_X_train,diabetes_X_test,diabetes_y_train,diabetes_y_test = train_test_split(diabetes_X,diabetes_y,20)
 
     print(f"# Training Samples: {len(diabetes_X_train)}; # Test samples: {len(diabetes_X_test)};")
     return diabetes_X_train, diabetes_y_train, diabetes_X_test, diabetes_y_test
@@ -56,3 +53,5 @@ def evaluate(model, X, y, y_predicted):
         print("****** Success ******")
     else:
         print("****** Failed ******")
+        
+    return r2

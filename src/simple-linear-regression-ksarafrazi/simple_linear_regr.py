@@ -4,8 +4,8 @@ import pickle
 import time, os
 
 VERSION = 1.0
-DEF_LR = 0.1
-DEF_ITERATIONS = 15000
+DEF_LR = 0.05
+DEF_ITERATIONS = 25000
 
 class SimpleLinearRegression:
     def __init__(self, iterations=DEF_ITERATIONS, lr=DEF_LR):
@@ -40,7 +40,7 @@ class SimpleLinearRegression:
 
     def __sgd(self, X, y, y_hat):
         """
-
+        Statistical gradient descent
         :param X: The training set
         :param y: The actual output on the training set
         :param y_hat: The predicted output on the training set
@@ -54,9 +54,26 @@ class SimpleLinearRegression:
 
         self.W -= self.lr * dW
         self.b -= self.lr * db
+        
+    def __gd(self, X, y, y_hat):
+        """
+        Gradient descent
+        :param X: The training set
+        :param y: The actual output on the training set
+        :param y_hat: The predicted output on the training set
+        :return:
+            sets updated W and b to the instance Object (self)
+        """
+
+        n = X.shape[0]
+        dW = -2/n*np.dot(X.squeeze(),(y-y_hat).squeeze())
+        db = -2/n*(y-y_hat).sum()
+
+        self.W -= self.lr * dW
+        self.b -= self.lr * db
 
 
-    def fit(self, X, y):
+    def fit(self, X, y, mode = 'SGD'):
         """
 
         :param X: The training set
@@ -64,12 +81,21 @@ class SimpleLinearRegression:
         :return:
         """
         t1 = time.time()
+        
         self.__init_weights(X)
         y_hat = self.predict(X)
         loss = self.__loss(y, y_hat)
         print(f"Initial Loss: {loss}")
+        if mode == 'GD':
+            print('Training using Gradient Descent')
+        else:
+            print('Training using Statistical Gradient Descent')
+            
         for i in range(self.iterations + 1):
-            self.__sgd(X, y, y_hat)
+            if mode == 'GD':
+                self.__gd(X, y, y_hat)
+            else:
+                self.__sgd(X, y, y_hat)
             y_hat = self.predict(X)
             loss = self.__loss(y, y_hat)
             if not i % 10000:
@@ -93,9 +119,11 @@ if __name__ == "__main__":
     X_train, y_train, X_test, y_test = generate_data()
     
     model = SimpleLinearRegression()
-    model.fit(X_train,y_train)
+    model.fit(X_train,y_train,mode='SGD')
     predicted = model.predict(X_test)
-    evaluate(model, X_test, y_test, predicted)
+    r2 = evaluate(model, X_test, y_test, predicted)
+    
+    model.r2 = r2
     
     # Save model
     with open(os.path.join(os.getcwd(),'model','model.pickle'), 'wb') as f:

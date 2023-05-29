@@ -18,5 +18,4 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = "github.com"
-"Bug Tracker" = "github.com"
+Homepage = "https://github.com/katsarafrazi/linear-regression-ks"
