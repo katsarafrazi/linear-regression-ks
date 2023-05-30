@@ -11,10 +11,6 @@ app = Flask(__name__)
 # Create parser for the payload data
 parser = reqparse.RequestParser()
 parser.add_argument('data')
-
-# Load model
-with open(os.path.join(os.getcwd(),'model','model.pickle'), 'rb') as f:
-    model = pickle.load(f)
         
 # Endpoint for streaming mode
 @app.route("/stream/", methods =["POST"])
@@ -59,5 +55,9 @@ def welcome():
     return "Welcome to Linear Regression API."
 
 if __name__ == '__main__':
+
+    # Load model
+    with open(os.path.join(os.getcwd(),'model','model.pickle'), 'rb') as f:
+        model = pickle.load(f)
 
     app.run(debug=True)

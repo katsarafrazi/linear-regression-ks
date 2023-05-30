@@ -1,4 +1,6 @@
 numpy
 scikit-learn
 requests
-
+flask
+matplotlib
+flask_restful

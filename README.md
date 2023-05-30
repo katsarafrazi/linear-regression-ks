@@ -79,4 +79,6 @@ y_predict = requests.post('https://ksarafrazi.pythonanywhere.com/batch', json=pa
 ## CI/CD Pipeline
 
 Github actions is used to create a CI/CD pipeline.
+The pipeline automatically lints the code, runs tests and builds a docker image. 
+Unittests to test the data loader and API endpoint have been implemented in `src/src/simple-linear-regression-ksarafrazi/tests`. For an enterprise system more unittest and validator tests should be included.
 
