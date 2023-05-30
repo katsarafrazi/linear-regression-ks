@@ -76,3 +76,7 @@ payload = {'data':json.dumps(X)}
 y_predict = requests.post('https://ksarafrazi.pythonanywhere.com/batch', json=payload, headers=headers).json()
 ```
 
+## CI/CD Pipeline
+
+Github actions is used to create a CI/CD pipeline.
+
