@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "simple-linear-regression-ksarafrazi"
-version = "0.0.1"
+version = "1.0.0"
 authors = [
   { name="Kathy", email="katayoon.sarafrazi@gmail.com" },
 ]

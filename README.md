@@ -5,6 +5,11 @@
 Linear regression model module with model training using Statititical Gradient Descent (SGD) or Gradient Descent. 
 
 ## Installation 
+
+`pip install -i https://test.pypi.org/simple/ simple-linear-regression-ksarafrazi==1.0.0`
+
+https://test.pypi.org/project/simple-linear-regression-ksarafrazi/1.0.0/
+
 You can find installation files in the dist directory.
 
 ## System Overview
